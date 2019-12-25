@@ -69,7 +69,7 @@ def gen_maps(cfg = None):
 			if (i == j):
 				throughput[i, j] = 0.0
 			else:
-				throughput[i, j] = random() * 1000 / np.linalg.norm(np.array(FSO[i]) - np.array(FSO[j]))
+				throughput[i, j] = random() * Nr * Nc / np.linalg.norm(np.array(FSO[i]) - np.array(FSO[j]))
 
 	maps["throughput"] = throughput.tolist()
 	dtNow = str(datetime.now()).replace(' ', '_').replace(':', '_')
