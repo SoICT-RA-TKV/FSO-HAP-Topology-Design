@@ -57,6 +57,7 @@ def gen_maps(cfg = None):
 	for fso in FSO:
 		maps["FSO"].append(dict())
 		i = len(maps["FSO"]) - 1
+		maps["FSO"][i]["id"] = i
 		maps["FSO"][i]["r"] = fso[0]
 		maps["FSO"][i]["c"] = fso[1]
 		maps["FSO"][i]["l"] = fso[2]
