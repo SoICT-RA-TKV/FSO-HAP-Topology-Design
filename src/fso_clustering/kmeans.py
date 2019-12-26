@@ -18,9 +18,9 @@ def cal_distance(rep, points, pid):
 		clusterpoints[i].append(pid[j]) # List of FSO id in cluster
 	return cluster, clusterpoints
 
-def main():
-	config = json.loads(open("config.json").read())
-	fso_maps = json.loads(open(sys.argv[1]).read())
+def main(fso_maps_file, config_file = "config.json"):
+	config = json.loads(open(config_file).read())
+	fso_maps = json.loads(open(fso_maps_file).read())
 
 	points = []
 	pid = []
@@ -105,4 +105,4 @@ def main():
 
 	
 if __name__ == "__main__":
-	main()
+	main(config_file = "config.json", fso_maps_file = sys.argv[1])
