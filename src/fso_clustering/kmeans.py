@@ -72,22 +72,26 @@ def main(fso_maps_file, config_file = "config.json"):
 				hap_maps["HAP"][NHAP]["coordinates"] = dict()
 				hap_maps["HAP"][NHAP]["coordinates"]["r"] = rep.c[tmp_i][0]
 				hap_maps["HAP"][NHAP]["coordinates"]["c"] = rep.c[tmp_i][1]
+				hap_maps["HAP"][NHAP]["coordinates"]["c"] = 0.0
 				hap_maps["HAP"][NHAP]["diameter"] = tmp_cluster[tmp_i, 0]
 				hap_maps["HAP"][NHAP]["NFSO"] = int(tmp_cluster[tmp_i, 1])
 				hap_maps["HAP"][NHAP]["FSO"] = []
 				for tmp_id in tmp_clusterpoints:
-					hap_maps["HAP"][NHAP]["FSO"].append({"id": tmp_id, "r": points[tmp_id][0], "c": points[tmp_id][1]})
+					tmp_fso = {"id": tmp_id, "r": points[tmp_id][0], "c": points[tmp_id][1], "l": 0.0}
+					hap_maps["HAP"][NHAP]["FSO"].append(tmp_fso)
 				NHAP += 1
 		else:
 			hap_maps["HAP"].append(dict())
 			hap_maps["HAP"][NHAP]["coordinates"] = dict()
 			hap_maps["HAP"][NHAP]["coordinates"]["r"] = res.c[i][0]
 			hap_maps["HAP"][NHAP]["coordinates"]["c"] = res.c[i][1]
+			hap_maps["HAP"][NHAP]["coordinates"]["l"] = 0.0
 			hap_maps["HAP"][NHAP]["diameter"] = r_cluster[i, 0]
 			hap_maps["HAP"][NHAP]["NFSO"] = int(r_cluster[i, 1])
 			hap_maps["HAP"][NHAP]["FSO"] = []
 			for iid in r_clusterpoints[i]:
-				hap_maps["HAP"][NHAP]["FSO"].append(dict({"id": iid, "r": points[iid][0], "c": points[iid][1]}))
+				tmp_fso = {"id": iid, "r": points[iid][0], "c": points[iid][1], "l": 0.0}
+				hap_maps["HAP"][NHAP]["FSO"].append(tmp_fso)
 			NHAP += 1
 	hap_maps["NHAP"] = int(NHAP)
 
