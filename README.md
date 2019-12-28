@@ -1,6 +1,9 @@
 # Requirements
 - Chạy lệnh `pip install -r requirements.txt` để cài các modules cần thiết
 
+# Chạy chương trình
+- Chạy lệnh `python main.py` để thực hiện tất cả công việc, hoặc chạy từng bước theo hướng dẫn phía dưới.
+
 # Sinh bản đồ
 ## Cấu hình bản đồ
 1. File ground_fso_generator.json

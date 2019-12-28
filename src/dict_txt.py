@@ -36,14 +36,14 @@ def fso_txt2dict(file):
 		tmp_d['id'] = i
 		tmp_d['r'], tmp_d['c'], tmp_d['l']  = tmp[:3]
 		FSO.append(tmp_d)
-	throughput = np.zeros((NFSO, NFSO))
+	throughput = np.zeros((NFSO, NFSO), dtype = int)
 	stream.readline()
 	stream.readline()
 	while True:
 		a = stream.readline().split(' ')
 		if len(a) != 3:
 			break
-		throughput[int(a[0]), int(a[1])] = float(a[2])
+		throughput[int(a[0]), int(a[1])] = int(a[2])
 	data['throughput'] = throughput.tolist()
 	return data
 
@@ -89,7 +89,7 @@ def hap_txt2dict(file):
 	stream.readline()
 	stream.readline()
 	HAP = data['HAP'] = []
-	throughput = np.zeros((NHAP, NHAP))
+	throughput = np.zeros((NHAP, NHAP), dtype = int)
 	a = None
 	for i in range(NHAP):
 		tmp = [float(t) for t in stream.readline().split(' ')]
@@ -106,7 +106,7 @@ def hap_txt2dict(file):
 		if a[0] == '#':
 			break
 		a = a.split(' ')
-		throughput[int(a[0]), int(a[1])] = float(a[2])
+		throughput[int(a[0]), int(a[1])] = int(a[2])
 	data['throughput'] = throughput.tolist()
 	for i in range(NHAP):
 		HAP[i]['diameter'] = float(stream.readline())

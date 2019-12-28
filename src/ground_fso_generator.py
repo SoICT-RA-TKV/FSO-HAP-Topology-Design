@@ -64,7 +64,7 @@ def ground_fso_generator(cfg = None):
 		_map['FSO'][i]['l'] = fso[2]
 	NFSO = len(FSO)
 	FSO = list(FSO)
-	throughput = np.zeros((NFSO, NFSO))
+	throughput = np.zeros((NFSO, NFSO), dtype = int)
 	for i in range(NFSO):
 		for j in range(NFSO):
 			if (i == j):

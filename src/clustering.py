@@ -95,7 +95,7 @@ def clustering(fso_map_file, config_file = 'clustering.json'):
 			NHAP += 1
 	hap_map['NHAP'] = int(NHAP)
 
-	throughput = np.zeros((hap_map['NHAP'], hap_map['NHAP']))
+	throughput = np.zeros((hap_map['NHAP'], hap_map['NHAP']), dtype = int)
 	for i in range(hap_map['NHAP']):
 		for j in range(hap_map['NHAP']):
 			for pi in hap_map['HAP'][i]['FSO']:

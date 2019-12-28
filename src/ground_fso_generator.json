@@ -1,11 +1,11 @@
 [
   {
     "NPivot": 4,
-    "NMap": 0,
+    "NMap": 5,
     "mapName": "Set.01",
-    "Nr": 100,
-    "Nc": 100,
-    "ratio": 10,
+    "Nr": 20,
+    "Nc": 20,
+    "ratio": 2,
     "pivot": [
       {
         "coordinates": {
