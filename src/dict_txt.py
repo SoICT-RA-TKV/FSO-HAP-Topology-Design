@@ -1,11 +1,36 @@
 import json
 import sys
 import numpy as np
+from utils import *
 
-def join_any(separator, data):
-	for i in range(len(data)):
-		data[i] = str(data[i])
-	return separator.join(data)
+def config_ground_fso_txt2dict(file):
+	data = dict()
+	stream = open(file, 'r')
+	stream.readline()
+	map_size = [int(i) for i in stream.readline().split(' ')]
+	data['Nr'] = map_size[0]
+	data['Nc'] = map_size[1]
+	stream.readline()
+	NPivot = data['NPivot'] = int(stream.readline())
+	data['pivot'] = []
+	stream.readline()
+	for i in range(NPivot):
+		tmp_pivot = dict()
+		tmp = stream.readline().split(' ')
+		coordinates = tmp_pivot['coordinates'] = dict()
+		coordinates['r'] = int(tmp[0])
+		coordinates['c'] = int(tmp[1])
+		influence = tmp_pivot['influence'] = dict()
+		influence['r'] = float(tmp[2])
+		influence['c'] = float(tmp[3])
+		data['pivot'].append(tmp_pivot)
+	stream.readline()
+	data['ratio'] = float(stream.readline())
+	stream.readline()
+	data['mapName'] = stream.readline().split(' ')[0].replace('\n', '')
+	stream.readline()
+	data['NMap'] = int(stream.readline())
+	return data
 
 def fso_dict2txt(data, file):
 	stream = open(file, 'w')
