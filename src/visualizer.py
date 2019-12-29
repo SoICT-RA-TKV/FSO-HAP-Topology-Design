@@ -7,6 +7,28 @@ import os
 global prefix
 global visualize_func
 
+def visualize_density(file):
+	if file.split('/')[-1] != 'density.txt':
+		return
+	stream = open(file, 'r')
+	mapName = stream.readline().split(' ')[0].replace('\n', '')
+	NMap = int(stream.readline())
+	ratio = float(stream.readline())
+	density = []
+	while True:
+		tmp = stream.readline().replace('\n', '').split(' ')
+		try:
+			density.append([float(i) for i in tmp])
+		except:
+			break
+	Nr = len(density)
+	Nc = len(density[0])
+
+	plt.imshow(density, interpolation='nearest', cmap='coolwarm', vmin=0, vmax=1)
+	plt.savefig(file.replace('txt', 'png'))
+	plt.clf()
+
+
 def visualize_fso(file):
 	_map = dict_txt.fso_txt2dict(file)
 	r = []
@@ -59,10 +81,11 @@ def visualize_batch(file = 'data'):
 def main():
 	global prefix
 	global visualize_func
-	prefix = ['ground_fso', 'clustering']
+	prefix = ['ground_fso', 'clustering', 'density']
 	visualize_func = {
 	'ground_fso': visualize_fso,
-	'clustering': visualize_hap
+	'clustering': visualize_hap,
+	'density': visualize_density
 	}
 	if len(sys.argv) > 1:
 		visualize_batch(file = sys.argv[1])
