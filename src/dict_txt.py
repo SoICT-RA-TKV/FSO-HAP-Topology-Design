@@ -11,6 +11,10 @@ def config_ground_fso_txt2dict(file):
 	data['Nr'] = map_size[0]
 	data['Nc'] = map_size[1]
 	stream.readline()
+	cell_size = [float(i) for i in stream.readline().split(' ')]
+	data['Sr'] = cell_size[0]
+	data['Sc'] = cell_size[1]
+	stream.readline()
 	NPivot = data['NPivot'] = int(stream.readline())
 	data['pivot'] = []
 	stream.readline()
@@ -44,9 +48,8 @@ def fso_dict2txt(data, file):
 		stream.write(join_any(' ', [FSO[i]['r'], FSO[i]['c'], FSO[i]['l']]) + '\n')
 	stream.write('#Ma tran yeu cau D\n')
 	stream.write('#source_index dest_index bw don vi Mbps\n')
-	for i in range(NFSO):
-		for j in range(NFSO):
-			stream.write(join_any(' ', [i, j, throughput[i][j]]) + '\n')
+	for d in throughput:
+		stream.write(join_any(' ', [d[0], d[1], throughput[d]]) + '\n')
 
 def fso_txt2dict(file):
 	stream = open(file, 'r')

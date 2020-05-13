@@ -1,5 +1,5 @@
 from datetime import datetime
-from random import random
+from random import random, randint
 import json
 import numpy as np
 import os
@@ -12,11 +12,8 @@ def main():
 		cal_density_batch(file = sys.argv[1])
 	else:
 		cal_density_batch()
-	if len(sys.argv) > 1:
-		file = sys.argv[1]
-		if len(sys.argv) > 2:
-			file = sys.argv[2]
-		ground_fso_generate_batch(file = file)
+	if len(sys.argv) > 2:
+		ground_fso_generate_batch(file = sys.argv[2])
 	else:
 		ground_fso_generate_batch()
 
@@ -57,6 +54,7 @@ def cal_density(file):
 	stream.write(cfg['mapName'] + '\n')
 	stream.write(str(cfg['NMap']) + '\n')
 	stream.write(str(cfg['ratio']) + '\n')
+	stream.write(str(cfg['Sr']) + ' ' + str(cfg['Sc']) + '\n')
 	for ir in range(Nr):
 		stream.write(join_any(' ', density[ir]) + '\n')
 
@@ -88,6 +86,9 @@ def ground_fso_generate(file = 'density.txt'):
 	mapName = stream.readline().split(' ')[0].replace('\n', '')
 	NMap = int(stream.readline())
 	ratio = float(stream.readline())
+	cell_size = [float(i) for i in stream.readline().split(' ')]
+	Sr = cell_size[0]
+	Sc = cell_size[1]
 	density = []
 	while True:
 		tmp = stream.readline().replace('\n', '').split(' ')
@@ -105,7 +106,7 @@ def ground_fso_generate(file = 'density.txt'):
 				prob = density[ir][ic]
 				rand = random()
 				if rand < prob / ratio:
-					FSO.add((ir + random(), ic + random(), 0.0))
+					FSO.add((Sr * (ir + random()), Sc * (ic + random()), 0.0))
 		_map = dict()
 		_map['NFSO'] = len(FSO)
 		_map['FSO'] = []
@@ -118,14 +119,30 @@ def ground_fso_generate(file = 'density.txt'):
 			_map['FSO'][i]['l'] = fso[2]
 		NFSO = len(FSO)
 		FSO = list(FSO)
-		throughput = np.zeros((NFSO, NFSO), dtype = int)
-		for i in range(NFSO):
-			for j in range(NFSO):
-				if (i == j):
-					throughput[i, j] = 0.0
-				else:
-					throughput[i, j] = random() * Nr * Nc / np.linalg.norm(np.array(FSO[i]) - np.array(FSO[j]))
-		_map['throughput'] = throughput.tolist()
+		# throughput = np.zeros((NFSO, NFSO), dtype = int)
+		# for i in range(NFSO):
+		# 	for j in range(NFSO):
+		# 		if (i == j):
+		# 			throughput[i, j] = 0.0
+		# 		else:
+		# 			# throughput[i, j] = random() * Nr * Nc / np.linalg.norm(np.array(FSO[i]) - np.array(FSO[j]))
+		# 			throughput[i, j] = random() * 512 / NFSO
+		in_demand = np.zeros((NFSO, ), dtype=float)
+		ou_demand = np.zeros((NFSO, ), dtype=float)
+		throughput = dict({})
+		for idemand in range(NFSO * 64):
+			i = randint(1, NFSO) - 1
+			j = randint(1, NFSO) - 1
+			if (i == j) or ((i, j) in throughput):
+				continue
+			if (1024 - ou_demand[i] < 1) or (1024 - in_demand[j] < 1):
+				continue
+			demand = random() * min([1024 - ou_demand[i], 1024 - in_demand[j], 64])
+			throughput[(i, j)] = demand
+			ou_demand[i] += demand
+			in_demand[j] += demand
+
+		_map['throughput'] = throughput
 		dtNow = str(datetime.now()).replace(' ', '_').replace(':', '_')
 		try:
 			os.makedirs('./data/' + mapName)
