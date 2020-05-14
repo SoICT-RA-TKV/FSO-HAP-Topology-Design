@@ -137,7 +137,9 @@ def ground_fso_generate(file = 'density.txt'):
 				continue
 			if (1024 - ou_demand[i] < 1) or (1024 - in_demand[j] < 1):
 				continue
-			demand = random() * min([1024 - ou_demand[i], 1024 - in_demand[j], 64])
+			demand = int(random() * min([1024 - ou_demand[i], 1024 - in_demand[j], 64]))
+			if demand <= 0:
+				continue
 			throughput[(i, j)] = demand
 			ou_demand[i] += demand
 			in_demand[j] += demand

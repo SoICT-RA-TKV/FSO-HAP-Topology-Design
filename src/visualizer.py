@@ -14,6 +14,7 @@ def visualize_density(file):
 	mapName = stream.readline().split(' ')[0].replace('\n', '')
 	NMap = int(stream.readline())
 	ratio = float(stream.readline())
+	stream.readline()
 	density = []
 	while True:
 		tmp = stream.readline().replace('\n', '').split(' ')

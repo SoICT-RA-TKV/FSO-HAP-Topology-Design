@@ -64,19 +64,20 @@ def clustering(fso_map_file, config_file = 'clustering.json'):
 			rep = clusterizerrunkmeans(s, math.ceil(NC / r_cluster[i, 1]))
 			hap_map['NHAP'] += rep.k
 			tmp_cluster, tmp_clusterpoints = cal_distance(rep, r_clusterpoints[i], tmp_pid)
-			print(rep.k)
-			print(tmp_cluster)
-			print(tmp_clusterpoints)
+			print('number of cluster:', rep.k)
+			print('diameter, number of points:', tmp_cluster)
+			print('list of points:', tmp_clusterpoints)
 			for tmp_i in range(rep.k):
+				print(tmp_i)
 				hap_map['HAP'].append(dict())
 				hap_map['HAP'][NHAP]['coordinates'] = dict()
 				hap_map['HAP'][NHAP]['coordinates']['r'] = rep.c[tmp_i][0]
 				hap_map['HAP'][NHAP]['coordinates']['c'] = rep.c[tmp_i][1]
-				hap_map['HAP'][NHAP]['coordinates']['c'] = 0.0
+				hap_map['HAP'][NHAP]['coordinates']['l'] = 0.0
 				hap_map['HAP'][NHAP]['diameter'] = tmp_cluster[tmp_i, 0]
 				hap_map['HAP'][NHAP]['NFSO'] = int(tmp_cluster[tmp_i, 1])
 				hap_map['HAP'][NHAP]['FSO'] = []
-				for tmp_id in tmp_clusterpoints:
+				for tmp_id in tmp_clusterpoints[0]:
 					tmp_fso = {'id': tmp_id, 'r': points[tmp_id][0], 'c': points[tmp_id][1], 'l': 0.0}
 					hap_map['HAP'][NHAP]['FSO'].append(tmp_fso)
 				NHAP += 1
