@@ -1,0 +1,23 @@
+# Kich thuoc map: hang x cot
+200 200
+# Kich thuoc 1 o: cao x rong
+0.5 0.5
+# So pivot
+10
+# Danh sach pivot: toa do (hang, cot) tam anh huong (toc do giam, anh huong tai tam)
+99 99 2 0.25
+0 99 2 0.25
+99 0 2 0.25
+0 0 2 0.25
+0 50 2 0.25
+50 0 2 0.25
+50 50 2 0.25
+99 50 2 0.25
+50 99 2 0.25
+51 51 2 0.25
+# Ti le thua hoa
+1
+# Ten map
+Set.08
+# So map
+10

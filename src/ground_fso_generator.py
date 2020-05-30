@@ -150,7 +150,12 @@ def ground_fso_generate(file = 'density.txt'):
 			os.makedirs('./data/' + mapName)
 		except:
 			pass
-		mapFName = './data/' + mapName + '/' + 'ground_fso_' + mapName + '_' + dtNow + '.txt'
+		sub_id = 0
+		while True:
+			mapFName = './data/' + mapName + '/' + 'ground_fso_' + mapName + '_' + str(_map['NFSO']) + '_' + str(sub_id) + '.txt'
+			if mapFName not in os.listdir('./data/' + mapName):
+				break
+			sub_id += 1
 		dict_txt.fso_dict2txt(data = _map, file = mapFName)
 
 
