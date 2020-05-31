@@ -152,7 +152,7 @@ def ground_fso_generate(file = 'density.txt'):
 			pass
 		sub_id = 0
 		while True:
-			mapFName = './data/' + mapName + '/' + 'ground_fso_' + mapName + '_' + str(_map['NFSO']) + '_' + str(sub_id) + '.txt'
+			mapFName = './data/' + mapName + '/' + 'gfso' + '_' + str(_map['NFSO']) + '_' + str(sub_id) + '.txt'
 			if mapFName not in os.listdir('./data/' + mapName):
 				break
 			sub_id += 1

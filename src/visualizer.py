@@ -82,9 +82,9 @@ def visualize_batch(file = 'data'):
 def main():
 	global prefix
 	global visualize_func
-	prefix = ['ground_fso', 'clustering', 'density']
+	prefix = ['gfso', 'clustering', 'density']
 	visualize_func = {
-	'ground_fso': visualize_fso,
+	'gfso': visualize_fso,
 	'clustering': visualize_hap,
 	'density': visualize_density
 	}
