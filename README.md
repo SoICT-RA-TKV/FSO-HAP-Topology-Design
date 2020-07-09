@@ -1,3 +1,6 @@
+# Giới thiệu
+- Chương trình sinh dữ liệu đầu vào cho bài toán thiết kế và triển khai mạng FSO.
+
 # Requirements
 - Chạy lệnh `pip install -r requirements.txt` để cài các modules cần thiết
 
